@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Francisco Fonseca</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Work+Sans:wght@300;400;600&display=swap');
+
+    :root {
+      --green: #1d6b3a;
+      --gold: #c79a2e;
+      --orange: #e08a2e;
+      --purple: #5b2b73;
+      --tan: #f3e6cf;
+      --ink: #1f1b16;
+      --white: #ffffff;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Work Sans', system-ui, sans-serif;
+      color: var(--ink);
+      background: radial-gradient(circle at top left, #fffdf8 0%, var(--tan) 55%, #ead9b8 100%);
+    }
+
+    .page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      padding: 32px 7vw 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 24px;
+      background: linear-gradient(135deg, rgba(29, 107, 58, 0.12), rgba(199, 154, 46, 0.22));
+      border-bottom: 1px solid rgba(31, 27, 22, 0.08);
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--green);
+    }
+
+    .badge::before {
+      content: '';
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--green), var(--gold));
+      box-shadow: 0 0 0 4px rgba(199, 154, 46, 0.2);
+    }
+
+    .hero {
+      padding: 28px 7vw 54px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 36px;
+      align-items: center;
+    }
+
+    .hero-text h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.4rem, 4vw, 3.6rem);
+      color: var(--green);
+      margin: 0 0 16px;
+    }
+
+    .hero-text p {
+      font-size: 1.05rem;
+      line-height: 1.7;
+      margin: 0 0 20px;
+    }
+
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 20px;
+      background: linear-gradient(135deg, var(--gold), var(--orange));
+      color: var(--white);
+      font-weight: 600;
+      border-radius: 999px;
+      box-shadow: 0 10px 25px rgba(224, 138, 46, 0.35);
+      letter-spacing: 0.02em;
+    }
+
+    .hero-visual {
+      position: relative;
+      padding: 16px;
+    }
+
+    .hero-visual::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 28px;
+      background: linear-gradient(160deg, rgba(29, 107, 58, 0.9), rgba(91, 43, 115, 0.75));
+      transform: rotate(-2deg);
+      z-index: 0;
+    }
+
+    .hero-visual img {
+      position: relative;
+      width: 100%;
+      height: auto;
+      border-radius: 24px;
+      object-fit: cover;
+      box-shadow: 0 24px 40px rgba(31, 27, 22, 0.25);
+      z-index: 1;
+    }
+
+    .quote-grid {
+      padding: 24px 7vw 64px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+      background: linear-gradient(180deg, rgba(243, 230, 207, 0), rgba(243, 230, 207, 0.6));
+    }
+
+    .quote-card {
+      padding: 22px;
+      border-radius: 18px;
+      background: var(--white);
+      box-shadow: 0 16px 24px rgba(31, 27, 22, 0.1);
+      border-top: 6px solid var(--green);
+    }
+
+    .quote-card:nth-child(2) {
+      border-top-color: var(--gold);
+    }
+
+    .quote-card:nth-child(3) {
+      border-top-color: var(--orange);
+    }
+
+    .quote-card:nth-child(4) {
+      border-top-color: var(--purple);
+    }
+
+    .quote-card h2 {
+      font-family: 'Playfair Display', serif;
+      margin: 0 0 10px;
+      color: var(--purple);
+    }
+
+    .quote-card p {
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    .statement {
+      margin: 0 7vw 60px;
+      padding: 32px;
+      background: linear-gradient(135deg, rgba(91, 43, 115, 0.08), rgba(199, 154, 46, 0.18));
+      border-radius: 26px;
+      border: 1px solid rgba(91, 43, 115, 0.18);
+    }
+
+    .statement h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      margin: 0 0 16px;
+      color: var(--green);
+    }
+
+    .statement p {
+      margin: 0;
+      font-size: 1.05rem;
+      line-height: 1.8;
+    }
+
+    footer {
+      margin-top: auto;
+      padding: 32px 7vw 44px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+      justify-content: space-between;
+      background: linear-gradient(135deg, var(--green), var(--purple));
+      color: var(--white);
+      border-top: 4px solid var(--gold);
+    }
+
+    footer span {
+      font-weight: 600;
+      letter-spacing: 0.05em;
+    }
+
+    footer p {
+      margin: 0;
+      max-width: 480px;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 720px) {
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .hero-text h1 {
+        font-size: 2.4rem;
+      }
+
+      .statement {
+        padding: 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <div class="badge">Francisco Fonseca</div>
+      <div class="badge" style="color: var(--purple);">Dream big. Build forward.</div>
+    </header>
+
+    <section class="hero">
+      <div class="hero-text">
+        <h1>Father. Patriot. Builder of Possibility.</h1>
+        <div class="hero-cta">Impacting the world day by day</div>
+      </div>
+      <div class="hero-visual">
+        <img src="cisco-1.jpg" alt="Francisco Fonseca" />
+      </div>
+    </section>
+
+    <section class="quote-grid">
+      <article class="quote-card">
+        <h2>Dignity &amp; Compassion</h2>
+        <p>I believe in treating people with dignity, compassion, love, and respect. We are all people with flaws — imperfect — and we sin as humans.</p>
+      </article>
+      <article class="quote-card">
+        <h2>Forward Motion</h2>
+        <p>But I believe it is about moving forward, putting your best foot forward with a smile on your face, and trying to do right by helping other people when we can.</p>
+      </article>
+      <article class="quote-card">
+        <h2>Next Generations</h2>
+        <p>Creating a future for the next generations starts with our current actions. We can do great things, and we will do great things.</p>
+      </article>
+      <article class="quote-card">
+        <h2>Daily Impact</h2>
+        <p>We are here to impact this world for the better, building day by day, second by millisecond.</p>
+      </article>
+    </section>
+
+    <section class="statement">
+      <h3>Francisco's Statement</h3>
+      <p>I am a father and proud to be an American. I believe all people should chase the American Dream — dream big; no dream is unattainable in my eyes. I believe we can accomplish anything we put our minds to; if we think it, we can create it. I believe in treating people with dignity, compassion, love, and respect. We are all people with flaws — imperfect — and we sin as humans. But I believe it is about moving forward and putting your best foot forward with a smile on your face, and trying to do right by helping other people when we can. Creating a future for the next generations starts with our current actions. We can do great things, and we will do great things. We are here to impact this world for the better, building day by day, second by millisecond.</p>
+    </section>
+
+    <footer>
+      <span>Francisco Fonseca</span>
+      <p>Rooted in family and the belief that every dream can be built into reality through purpose, compassion, and action.</p>
+    </footer>
+  </div>
+</body>
+</html>
