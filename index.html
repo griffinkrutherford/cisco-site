@@ -100,6 +100,7 @@
     .hero-visual {
       position: relative;
       padding: 16px;
+      overflow: hidden;
     }
 
     .hero-visual::before {
@@ -115,9 +116,10 @@
     .hero-visual img {
       position: relative;
       width: 100%;
-      height: auto;
+      height: min(640px, 78vw);
       border-radius: 24px;
       object-fit: cover;
+      object-position: center 18%;
       box-shadow: 0 24px 40px rgba(31, 27, 22, 0.25);
       z-index: 1;
     }
@@ -219,6 +221,11 @@
       .statement {
         padding: 24px;
       }
+
+      .hero-visual img {
+        height: 520px;
+        object-position: center 12%;
+      }
     }
   </style>
 </head>
@@ -235,7 +242,7 @@
         <div class="hero-cta">Impacting the world day by day</div>
       </div>
       <div class="hero-visual">
-        <img src="cisco-1.jpg" alt="Francisco Fonseca" />
+        <img src="cisco-zoomed-in.png" alt="Francisco Fonseca" />
       </div>
     </section>
 
