@@ -15,6 +15,7 @@
       --tan: #f3e6cf;
       --ink: #1f1b16;
       --white: #ffffff;
+      --shadow: 0 24px 40px rgba(31, 27, 22, 0.18);
     }
 
     * {
@@ -26,12 +27,29 @@
       font-family: 'Work Sans', system-ui, sans-serif;
       color: var(--ink);
       background: radial-gradient(circle at top left, #fffdf8 0%, var(--tan) 55%, #ead9b8 100%);
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: -10%;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(199, 154, 46, 0.18), transparent 28%),
+        radial-gradient(circle at 80% 18%, rgba(91, 43, 115, 0.14), transparent 24%),
+        radial-gradient(circle at 72% 80%, rgba(29, 107, 58, 0.12), transparent 26%);
+      pointer-events: none;
+      z-index: -1;
+      filter: blur(18px);
+      animation: ambient-drift 18s ease-in-out infinite alternate;
     }
 
     .page {
       min-height: 100vh;
       display: flex;
       flex-direction: column;
+      position: relative;
+      isolation: isolate;
     }
 
     header {
@@ -42,6 +60,8 @@
       gap: 24px;
       background: linear-gradient(135deg, rgba(29, 107, 58, 0.12), rgba(199, 154, 46, 0.22));
       border-bottom: 1px solid rgba(31, 27, 22, 0.08);
+      animation: slide-down 720ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+      backdrop-filter: blur(10px);
     }
 
     .badge {
@@ -52,6 +72,7 @@
       letter-spacing: 0.08em;
       text-transform: uppercase;
       color: var(--green);
+      animation: soft-fade 700ms ease both;
     }
 
     .badge::before {
@@ -61,6 +82,7 @@
       border-radius: 50%;
       background: linear-gradient(135deg, var(--green), var(--gold));
       box-shadow: 0 0 0 4px rgba(199, 154, 46, 0.2);
+      animation: badge-pulse 2.8s ease-in-out infinite;
     }
 
     .profile-link {
@@ -76,10 +98,11 @@
       letter-spacing: 0.02em;
       text-decoration: none;
       transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease;
+      animation: soft-fade 800ms ease 120ms both;
     }
 
     .profile-link:hover {
-      transform: translateY(-1px);
+      transform: translateY(-2px) scale(1.01);
       box-shadow: 0 12px 22px rgba(31, 27, 22, 0.12);
       background: var(--white);
     }
@@ -90,6 +113,7 @@
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 36px;
       align-items: center;
+      position: relative;
     }
 
     .hero-text h1 {
@@ -97,12 +121,14 @@
       font-size: clamp(2.4rem, 4vw, 3.6rem);
       color: var(--green);
       margin: 0 0 16px;
+      animation: reveal-up 850ms cubic-bezier(0.2, 0.8, 0.2, 1) 140ms both;
     }
 
     .hero-text p {
       font-size: 1.05rem;
       line-height: 1.7;
       margin: 0 0 20px;
+      animation: reveal-up 850ms cubic-bezier(0.2, 0.8, 0.2, 1) 240ms both;
     }
 
     .hero-cta {
@@ -116,12 +142,27 @@
       border-radius: 999px;
       box-shadow: 0 10px 25px rgba(224, 138, 46, 0.35);
       letter-spacing: 0.02em;
+      position: relative;
+      overflow: hidden;
+      animation:
+        reveal-up 850ms cubic-bezier(0.2, 0.8, 0.2, 1) 320ms both,
+        cta-breathe 3s ease-in-out 1.2s infinite;
+    }
+
+    .hero-cta::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg, transparent 10%, rgba(255, 255, 255, 0.32) 45%, transparent 80%);
+      transform: translateX(-140%);
+      animation: cta-sheen 3.8s ease-in-out 1.8s infinite;
     }
 
     .hero-visual {
       position: relative;
       padding: 16px;
       overflow: hidden;
+      animation: reveal-up 900ms cubic-bezier(0.2, 0.8, 0.2, 1) 220ms both;
     }
 
     .hero-visual::before {
@@ -132,6 +173,21 @@
       background: linear-gradient(160deg, rgba(29, 107, 58, 0.9), rgba(91, 43, 115, 0.75));
       transform: rotate(-2deg);
       z-index: 0;
+      animation: frame-float 8s ease-in-out infinite;
+    }
+
+    .hero-visual::after {
+      content: '';
+      position: absolute;
+      inset: 6% 12% auto auto;
+      width: 180px;
+      height: 180px;
+      border-radius: 999px;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.34), rgba(255, 255, 255, 0));
+      mix-blend-mode: screen;
+      z-index: 2;
+      pointer-events: none;
+      animation: halo-shift 6.5s ease-in-out infinite;
     }
 
     .hero-visual img {
@@ -143,6 +199,43 @@
       object-position: center 8%;
       box-shadow: 0 24px 40px rgba(31, 27, 22, 0.25);
       z-index: 1;
+      transform-origin: center center;
+      animation: portrait-float 7s ease-in-out infinite;
+    }
+
+    .hero-spark {
+      position: absolute;
+      border-radius: 999px;
+      z-index: 3;
+      pointer-events: none;
+      filter: blur(0.4px);
+    }
+
+    .spark-one {
+      width: 18px;
+      height: 18px;
+      top: 12%;
+      right: 10%;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0));
+      animation: spark-rise 5s ease-in-out infinite;
+    }
+
+    .spark-two {
+      width: 10px;
+      height: 10px;
+      bottom: 18%;
+      left: 8%;
+      background: radial-gradient(circle, rgba(199, 154, 46, 0.9), rgba(199, 154, 46, 0));
+      animation: spark-rise 4.4s ease-in-out 800ms infinite;
+    }
+
+    .spark-three {
+      width: 14px;
+      height: 14px;
+      bottom: 30%;
+      right: 18%;
+      background: radial-gradient(circle, rgba(224, 138, 46, 0.95), rgba(224, 138, 46, 0));
+      animation: spark-rise 5.8s ease-in-out 1.4s infinite;
     }
 
     .quote-grid {
@@ -159,6 +252,29 @@
       background: var(--white);
       box-shadow: 0 16px 24px rgba(31, 27, 22, 0.1);
       border-top: 6px solid var(--green);
+      transition: transform 260ms ease, box-shadow 260ms ease, border-color 260ms ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .quote-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.52), rgba(255, 255, 255, 0));
+      transform: translateX(-130%);
+      opacity: 0;
+      transition: transform 420ms ease, opacity 420ms ease;
+    }
+
+    .quote-card:hover {
+      transform: translateY(-8px) rotate(-0.6deg);
+      box-shadow: 0 24px 34px rgba(31, 27, 22, 0.14);
+    }
+
+    .quote-card:hover::after {
+      transform: translateX(130%);
+      opacity: 1;
     }
 
     .quote-card:nth-child(2) {
@@ -190,6 +306,30 @@
       background: linear-gradient(135deg, rgba(91, 43, 115, 0.08), rgba(199, 154, 46, 0.18));
       border-radius: 26px;
       border: 1px solid rgba(91, 43, 115, 0.18);
+      position: relative;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: transform 260ms ease, box-shadow 260ms ease;
+    }
+
+    .statement::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(115deg, transparent 12%, rgba(255, 255, 255, 0.28) 48%, transparent 72%);
+      transform: translateX(-130%);
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .statement:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 28px 44px rgba(31, 27, 22, 0.16);
+    }
+
+    .statement:hover::after {
+      opacity: 1;
+      animation: card-sheen 900ms ease forwards;
     }
 
     .statement h3 {
@@ -216,6 +356,17 @@
       background: linear-gradient(135deg, var(--green), var(--purple));
       color: var(--white);
       border-top: 4px solid var(--gold);
+      position: relative;
+      overflow: hidden;
+    }
+
+    footer::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg, rgba(255, 255, 255, 0.04), transparent 30%, rgba(255, 255, 255, 0.08), transparent 70%);
+      transform: translateX(-100%);
+      animation: footer-sheen 10s linear infinite;
     }
 
     footer span {
@@ -238,6 +389,103 @@
     .footer-link:hover {
       background: rgba(255, 255, 255, 0.2);
       box-shadow: 0 12px 22px rgba(0, 0, 0, 0.18);
+    }
+
+    [data-reveal] {
+      opacity: 0;
+      transform: translateY(34px) scale(0.98);
+      transition:
+        opacity 700ms cubic-bezier(0.2, 0.8, 0.2, 1),
+        transform 700ms cubic-bezier(0.2, 0.8, 0.2, 1);
+      transition-delay: var(--delay, 0ms);
+      will-change: transform, opacity;
+    }
+
+    [data-reveal].is-visible {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    @keyframes ambient-drift {
+      from { transform: translate3d(-1%, -1%, 0) scale(1); }
+      to { transform: translate3d(2%, 1%, 0) scale(1.05); }
+    }
+
+    @keyframes slide-down {
+      from { opacity: 0; transform: translateY(-24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes soft-fade {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes reveal-up {
+      from { opacity: 0; transform: translateY(32px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes badge-pulse {
+      0%, 100% { transform: scale(1); box-shadow: 0 0 0 4px rgba(199, 154, 46, 0.2); }
+      50% { transform: scale(1.12); box-shadow: 0 0 0 8px rgba(199, 154, 46, 0.1); }
+    }
+
+    @keyframes cta-breathe {
+      0%, 100% { transform: translateY(0); box-shadow: 0 10px 25px rgba(224, 138, 46, 0.35); }
+      50% { transform: translateY(-2px); box-shadow: 0 16px 32px rgba(224, 138, 46, 0.42); }
+    }
+
+    @keyframes cta-sheen {
+      0%, 15% { transform: translateX(-140%); }
+      40%, 100% { transform: translateX(140%); }
+    }
+
+    @keyframes frame-float {
+      0%, 100% { transform: rotate(-2deg) translateY(0); }
+      50% { transform: rotate(-1deg) translateY(-8px); }
+    }
+
+    @keyframes portrait-float {
+      0%, 100% { transform: translateY(0) scale(1); }
+      50% { transform: translateY(-10px) scale(1.01); }
+    }
+
+    @keyframes halo-shift {
+      0%, 100% { transform: translate3d(0, 0, 0) scale(0.9); opacity: 0.6; }
+      50% { transform: translate3d(-16px, 10px, 0) scale(1.08); opacity: 1; }
+    }
+
+    @keyframes spark-rise {
+      0%, 100% { transform: translate3d(0, 0, 0) scale(0.9); opacity: 0.2; }
+      35% { opacity: 1; }
+      50% { transform: translate3d(-6px, -22px, 0) scale(1.15); }
+      80% { opacity: 0.45; }
+    }
+
+    @keyframes card-sheen {
+      from { transform: translateX(-130%); }
+      to { transform: translateX(130%); }
+    }
+
+    @keyframes footer-sheen {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation: none !important;
+        transition: none !important;
+        scroll-behavior: auto !important;
+      }
+
+      [data-reveal] {
+        opacity: 1;
+        transform: none;
+      }
     }
 
     @media (max-width: 720px) {
@@ -275,44 +523,75 @@
         <div class="hero-cta">Impacting the world day by day</div>
       </div>
       <div class="hero-visual">
+        <div class="hero-spark spark-one" aria-hidden="true"></div>
+        <div class="hero-spark spark-two" aria-hidden="true"></div>
+        <div class="hero-spark spark-three" aria-hidden="true"></div>
         <img src="cisco-zoomed-in.png" alt="Francisco Fonseca" />
       </div>
     </section>
 
     <section class="quote-grid">
-      <article class="quote-card">
+      <article class="quote-card" data-reveal>
         <h2>Dignity &amp; Compassion</h2>
         <p>I believe in treating people with dignity, compassion, love, and respect. We are all people with flaws — imperfect — and we sin as humans.</p>
       </article>
-      <article class="quote-card">
+      <article class="quote-card" data-reveal>
         <h2>Forward Motion</h2>
         <p>But I believe it is about moving forward, putting your best foot forward with a smile on your face, and trying to do right by helping other people when we can.</p>
       </article>
-      <article class="quote-card">
+      <article class="quote-card" data-reveal>
         <h2>Next Generations</h2>
         <p>Creating a future for the next generations starts with our current actions. We can do great things, and we will do great things.</p>
       </article>
-      <article class="quote-card">
+      <article class="quote-card" data-reveal>
         <h2>Daily Impact</h2>
         <p>We are here to impact this world for the better, building day by day, second by millisecond.</p>
       </article>
     </section>
 
-    <section class="statement">
+    <section class="statement" data-reveal>
       <h3>Francisco's Statement</h3>
       <p>I am a father and proud to be an American. I believe all people should chase the American Dream — dream big; no dream is unattainable in my eyes. I believe we can accomplish anything we put our minds to; if we think it, we can create it. I believe in treating people with dignity, compassion, love, and respect. We are all people with flaws — imperfect — and we sin as humans. But I believe it is about moving forward and putting your best foot forward with a smile on your face, and trying to do right by helping other people when we can. Creating a future for the next generations starts with our current actions. We can do great things, and we will do great things. We are here to impact this world for the better, building day by day, second by millisecond.</p>
     </section>
 
-    <section class="statement">
+    <section class="statement" data-reveal>
       <h3>A Business Perspective</h3>
       <p>At 35 years old, I believe everything is about business. Whether it is family or the people you come in contact with, every relationship should have a structure that helps everyone involved get to the next level. That standard has to work both ways for all parties. I also believe we have to be strong role models for the next generation by teaching them about business, responsibility, and how to conduct themselves. We can start with our youth at a young age so they can grow into the best version of themselves, and it is our responsibility as the older generation to guide them in the right direction. That is why I believe everything should have a business standpoint that helps you evolve to the next level.</p>
     </section>
 
-    <footer>
+    <footer data-reveal>
       <span>Francisco Fonseca</span>
       <p>Rooted in family and the belief that every dream can be built into reality through purpose, compassion, and action.</p>
       <a class="profile-link footer-link" href="https://www.linkedin.com/in/cisco-undefined-6ba227395/" target="_blank" rel="noreferrer">Connect on LinkedIn</a>
     </footer>
   </div>
+  <script>
+    const revealElements = document.querySelectorAll('[data-reveal]');
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+    revealElements.forEach((element, index) => {
+      element.style.setProperty('--delay', `${index * 90}ms`);
+    });
+
+    if (reducedMotion.matches) {
+      revealElements.forEach((element) => element.classList.add('is-visible'));
+    } else {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) {
+            return;
+          }
+
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        });
+      }, {
+        threshold: 0.18,
+        rootMargin: '0px 0px -8% 0px'
+      });
+
+      revealElements.forEach((element) => observer.observe(element));
+    }
+  </script>
 </body>
 </html>
